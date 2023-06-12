@@ -5,15 +5,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>IoSphere IoT Gateway Configurator</h1>
-        <p>Configurations:</p>
-        <select>
-            {% for option in data %}
-            <option>{{ option }}</option>
-            {% endfor %}
-        </select>
+    <div class="configurator">
+        <h1>Configurator</h1>
+        <p>Select an option:</p>
+        {% for button in data %}
+        <button class="config-btn">{{ button }}</button>
+        {% endfor %}
     </div>
+    <div class="main-page">
+        <h1>Main Page</h1>
+        <div id="main-content">
+          <p>Other contents go here...</p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-
