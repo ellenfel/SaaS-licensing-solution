@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Iosphere IoT Gateway Configurator</title>
+    <title>Simple Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <select>
-        {% for option in data %}
-        <option>{{ option }}</option>
-        {% endfor %}
-    </select>
+    <div class="container">
+        <h1>IoSphere IoT Gateway Configurator</h1>
+        <p>Configurations:</p>
+        <select>
+            {% for option in data %}
+            <option>{{ option }}</option>
+            {% endfor %}
+        </select>
+    </div>
 </body>
 </html>
+
