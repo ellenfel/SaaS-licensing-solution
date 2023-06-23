@@ -3,9 +3,9 @@ import requests
 def check_license_key(key):
     try:
         response = requests.get('http://127.0.0.1:8090/check_key', params={'license_key': key})
-        if response.status_code == 200:
+        if response.json()['valid']:
             return True
-        elif response.status_code == 401:
+        else:
             return False
     except requests.exceptions.RequestException as err:
         print ("Something went wrong with the licensing server request", err)
@@ -21,4 +21,3 @@ def start_application():
 
 if __name__ == "__main__":
     start_application()
-
