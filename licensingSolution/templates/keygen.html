@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Flask App</title>
+    <title>Key Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <nav class="nav">
       <ul class="menu">
-        <li><a href="#!" class="nav-link">Home</a></li>
+        <li><a href="/" class="nav-link">Home</a></li>
         <li><a href="#!" class="nav-link">About</a></li>
-        <li><a href="{{ url_for('keygen') }}" class="nav-link">Contact</a></li>
+        <li><a href="/keygen" class="nav-link">Contact</a></li>
         <li><a href="#!" class="nav-link">Faq</a></li>
       </ul>
     </nav>
     <div class="main-page">
-        <h1>Main Page</h1>
+        <h1>Key Generator Page</h1>
         <div id="main-content">
-          <p>Other contents go here...</p>
+          <h2>Generated Keys:</h2>
+          <ul>
+            {% for key in keys %}
+            <li>{{ key }}</li>
+            {% endfor %}
+          </ul>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

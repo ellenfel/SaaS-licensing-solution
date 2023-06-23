@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, send_from_directory, request, jsonify, render_template
+import os
 import secrets
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -9,7 +10,9 @@ valid_keys = set()  # In-memory storage for simplicity
 def keygen():
     key = secrets.token_hex(16)
     valid_keys.add(key)  # Store the key as valid
-    return key
+    return render_template('keygen.html', key=key)
+
+
 
 @app.route('/check_key')
 def check_key():
@@ -20,9 +23,12 @@ def check_key():
         return jsonify(valid=False), 401  # Key is invalid, return HTTP 401 Unauthorized
 
 @app.route('/')
-def serve_file():
-    data = ["Option 1", "Option 2", "Option 3"]
-    return render_template('index.html', data=data)
+def home():
+    return render_template('index.html')
+
+@app.route('/<path:path>')
+def serve_file(path):
+    return send_from_directory(app.static_folder, path)
 
 
 if __name__ == '__main__':
