@@ -5,13 +5,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="configurator">
-        <h1>Configurator</h1>
-        <p>Select an option:</p>
-        {% for button in data %}
-        <button class="config-btn">{{ button }}</button>
-        {% endfor %}
-    </div>
+    <nav class="nav">
+      <ul class="menu">
+        <li><a href="#!" class="nav-link">Home</a></li>
+        <li><a href="#!" class="nav-link">About</a></li>
+        <li><a href="#!" class="nav-link">Contact</a></li>
+        <li><a href="#!" class="nav-link">Faq</a></li>
+      </ul>
+    </nav>
     <div class="main-page">
         <h1>Main Page</h1>
         <div id="main-content">
@@ -20,9 +21,4 @@
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
-<link rel="stylesheet" href="/static/styles.css">
-<script src="/static/script.js"></script>
-
-
 </html>
