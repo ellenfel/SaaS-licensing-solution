@@ -7,22 +7,25 @@
 <body>
     <nav class="nav">
       <ul class="menu">
-        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
         <li><a href="#!" class="nav-link">About</a></li>
-        <li><a href="/keygen" class="nav-link">Contact</a></li>
+        <li><a href="{{ url_for('keygen') }}" class="nav-link">Contact</a></li>
         <li><a href="#!" class="nav-link">Faq</a></li>
       </ul>
     </nav>
     <div class="main-page">
-        <h1>Key Generator Page</h1>
-        <div id="main-content">
-          <h2>Generated Keys:</h2>
-          <ul>
-            {% for key in keys %}
-            <li>{{ key }}</li>
-            {% endfor %}
-          </ul>
+        <h1>Key Generator</h1>
+        <div id="keyGenerator">
+            <button id="generateKeyButton">Generate Key</button>
+            <p id="generatedKey">{{ key }}</p>
         </div>
+
+        <h2>List of Generated Keys:</h2>
+        <ul id="keysList">
+          {% for key in keys %}
+          <li>{{ key }}</li>
+          {% endfor %}
+        </ul>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

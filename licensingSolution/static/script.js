@@ -12,3 +12,17 @@ configButtons.forEach((btn) => {
         mainContent.textContent = btnText;
     });
 });
+
+// Add event listener to the Generate Key button
+document.getElementById('generateKeyButton').addEventListener('click', function() {
+    fetch('/keygen')
+        .then(response => response.text())
+        .then(key => {
+            // Add the new key to the 'generatedKey' paragraph
+            document.getElementById('generatedKey').textContent = key;
+            // Create a new list item and add it to the 'keysList' unordered list
+            const li = document.createElement('li');
+            li.textContent = key;
+            document.getElementById('keysList').appendChild(li);
+        });
+});

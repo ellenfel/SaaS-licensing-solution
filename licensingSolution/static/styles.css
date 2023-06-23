@@ -42,4 +42,39 @@ html, body, div, p, ul, li {
     box-sizing: border-box;
   }
   
-  
+  /* Existing styles... */
+
+/* Styles for the key generator */
+#keyGenerator {
+    background-color: #ddd; /* Light grey background for contrast */
+    padding: 20px; /* Add padding around the contents */
+    margin-bottom: 20px; /* Add space below the generator */
+}
+
+#generateKeyButton {
+    font-size: 18px; /* Larger, more modern font size */
+    color: #fff; /* White font color for contrast */
+    background-color: #007BFF; /* Blue background color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding to increase button size and give text more room */
+    cursor: pointer; /* Change cursor to hand icon when hovering over the button */
+    transition: background-color 0.3s ease; /* Smooth transition effect for button hover */
+}
+
+#generateKeyButton:hover {
+    background-color: #0056b3; /* Darker blue background when hovering over the button */
+}
+
+#keysList {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+#keysList li {
+    padding: 10px; /* Add padding around each key */
+    border-bottom: 1px solid #ddd; /* Add a divider between keys */
+}
+
+#keysList li:last-child {
+    border-bottom: none; /* Remove the divider from the last key */
+}

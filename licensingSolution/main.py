@@ -10,8 +10,7 @@ valid_keys = set()  # In-memory storage for simplicity
 def keygen():
     key = secrets.token_hex(16)
     valid_keys.add(key)  # Store the key as valid
-    return render_template('keygen.html', key=key)
-
+    return render_template('keygen.html', key=key, keys=valid_keys)
 
 
 @app.route('/check_key')
