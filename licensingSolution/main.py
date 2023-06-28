@@ -6,11 +6,14 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 valid_keys = set()  # In-memory storage for simplicity
 
-@app.route('/keygen')
+@app.route('/keygen', methods=['GET', 'POST'])
 def keygen():
-    key = secrets.token_hex(16)
-    valid_keys.add(key)  # Store the key as valid
-    return render_template('keygen.html', key=key, keys=valid_keys)
+    if request.method == 'POST':
+        key = secrets.token_hex(16)
+        valid_keys.add(key)  # Store the key as valid
+        return jsonify(key=key)  # Return the key as JSON
+    else:
+        return render_template('keygen.html', keys=valid_keys)
 
 
 @app.route('/check_key')

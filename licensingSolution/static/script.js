@@ -15,14 +15,12 @@ configButtons.forEach((btn) => {
 
 // Add event listener to the Generate Key button
 document.getElementById('generateKeyButton').addEventListener('click', function() {
-    fetch('/keygen')
-        .then(response => response.text())
-        .then(key => {
-            // Add the new key to the 'generatedKey' paragraph
-            document.getElementById('generatedKey').textContent = key;
+    fetch('/keygen', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
             // Create a new list item and add it to the 'keysList' unordered list
             const li = document.createElement('li');
-            li.textContent = key;
+            li.textContent = data.key;
             document.getElementById('keysList').appendChild(li);
         });
 });
