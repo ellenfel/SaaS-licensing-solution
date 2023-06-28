@@ -26,8 +26,9 @@
             <tr>
               <th>Id</th>
               <th>Key</th>
-              </tr>
-          </thead>
+              <th>Expiration Time (days)</th>
+            </tr>
+          </thead>          
           <tbody>
             {% for key in keys %}
             <tr>
@@ -44,13 +45,20 @@
           {% endfor %}
         </ul>
     </div>
+
     <!-- The Modal -->
     <div id="myModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+          <span class="close">&times;</span>
+          <input type="number" id="expireTime" placeholder="Expiration Time (days):" min="1" max="365">
+          <button id="confirmButton">Confirm</button>
       </div>
     </div>
+
+
+
+
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

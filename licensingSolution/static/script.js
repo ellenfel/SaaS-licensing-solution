@@ -13,30 +13,6 @@ configButtons.forEach((btn) => {
     });
 });
 
-// Add event listener to the Generate Key button
-document.getElementById('generateKeyButton').addEventListener('click', function() {
-    fetch('/keygen', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            // Clear the keys table
-            const keysTableBody = document.querySelector('#keysTable tbody');
-            keysTableBody.innerHTML = '';
-
-            // Create a new table row for each key and add it to the 'keysTable' table
-            data.keys.forEach(item => {
-                const tr = document.createElement('tr');
-                const tdId = document.createElement('td');
-                tdId.textContent = item.id;
-                const tdKey = document.createElement('td');
-                tdKey.textContent = item.key;
-                tr.appendChild(tdId);
-                tr.appendChild(tdKey);
-                keysTableBody.appendChild(tr);
-            });
-        });
-});
-
-
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -46,6 +22,9 @@ var btn = document.getElementById("generateKeyButton");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
+// Get the expiration time input field
+var expireTimeInput = document.getElementById('expireTime');
+
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
@@ -54,12 +33,81 @@ btn.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  // Send the POST request when the modal is closed
+  var expireTime = expireTimeInput.value || 30;
+  fetch('/keygen', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({expireTime: expireTime})
+  })
+  .then(response => response.json())
+  .then(data => {
+      // Clear the keys table
+      const keysTableBody = document.querySelector('#keysTable tbody');
+      keysTableBody.innerHTML = '';
+
+      // Create a new table row for each key and add it to the 'keysTable' table
+      data.keys.forEach(item => {
+          const tr = document.createElement('tr');
+          const tdId = document.createElement('td');
+          tdId.textContent = item.id;
+          const tdKey = document.createElement('td');
+          tdKey.textContent = item.key;
+          const tdExpireTime = document.createElement('td');
+          tdExpireTime.textContent = item.expireTime;
+          tr.appendChild(tdId);
+          tr.appendChild(tdKey);
+          tr.appendChild(tdExpireTime);
+          keysTableBody.appendChild(tr);
+      });
+  });
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    // Don't send the POST request if the modal is closed by clicking outside
   }
+}
+
+// Get the Confirm button that confirms the input and closes the modal
+var confirmBtn = document.getElementById("confirmButton");
+
+confirmBtn.onclick = function() {
+    modal.style.display = "none";
+    // Send the POST request when the modal is closed
+    var expireTime = expireTimeInput.value || 30;
+    fetch('/keygen', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({expireTime: expireTime})
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear the keys table
+        const keysTableBody = document.querySelector('#keysTable tbody');
+        keysTableBody.innerHTML = '';
+
+        // Create a new table row for each key and add it to the 'keysTable' table
+        data.keys.forEach(item => {
+        const tr = document.createElement('tr');
+        const tdId = document.createElement('td');
+        tdId.textContent = item.id;
+        const tdKey = document.createElement('td');
+        tdKey.textContent = item.key;
+        const tdExpireTime = document.createElement('td');
+        tdExpireTime.textContent = item.expireTime;
+        tr.appendChild(tdId);
+        tr.appendChild(tdKey);
+        tr.appendChild(tdExpireTime);
+        keysTableBody.appendChild(tr);
+        });
+
+    });
 }
 
