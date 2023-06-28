@@ -18,18 +18,24 @@ document.getElementById('generateKeyButton').addEventListener('click', function(
     fetch('/keygen', { method: 'POST' })
         .then(response => response.json())
         .then(data => {
-            // Clear the keys list
-            const keysList = document.getElementById('keysList');
-            keysList.innerHTML = '';
+            // Clear the keys table
+            const keysTableBody = document.querySelector('#keysTable tbody');
+            keysTableBody.innerHTML = '';
 
-            // Create a new list item for each key and add it to the 'keysList' unordered list
+            // Create a new table row for each key and add it to the 'keysTable' table
             data.keys.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.id}. ${item.key}`;
-                keysList.appendChild(li);
+                const tr = document.createElement('tr');
+                const tdId = document.createElement('td');
+                tdId.textContent = item.id;
+                const tdKey = document.createElement('td');
+                tdKey.textContent = item.key;
+                tr.appendChild(tdId);
+                tr.appendChild(tdKey);
+                keysTableBody.appendChild(tr);
             });
         });
 });
+
 
 // Get the modal
 var modal = document.getElementById("myModal");

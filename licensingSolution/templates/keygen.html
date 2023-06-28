@@ -21,6 +21,23 @@
         </div>
 
         <h2>List of Generated Keys:</h2>
+        <table id="keysTable">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Key</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for key in keys %}
+            <tr>
+              <td>{{ key.id }}</td>
+              <td>{{ key.key }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
         <ul id="keysList">
           {% for key in keys %}
           <li>{{ key.id }}. {{ key.key }}</li>
