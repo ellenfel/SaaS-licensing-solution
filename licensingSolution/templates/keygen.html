@@ -17,13 +17,13 @@
         <h1>Key Generator</h1>
         <div id="keyGenerator">
             <button id="generateKeyButton">Generate Key</button>
-            <p id="generatedKey">{{ key }}</p> 
+            <p id="generatedKey"></p> 
         </div>
 
         <h2>List of Generated Keys:</h2>
         <ul id="keysList">
           {% for key in keys %}
-          <li>{{ key }}</li>
+          <li>{{ key.id }}. {{ key.key }}</li>
           {% endfor %}
         </ul>
     </div>
