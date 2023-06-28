@@ -18,9 +18,15 @@ document.getElementById('generateKeyButton').addEventListener('click', function(
     fetch('/keygen', { method: 'POST' })
         .then(response => response.json())
         .then(data => {
-            // Create a new list item and add it to the 'keysList' unordered list
-            const li = document.createElement('li');
-            li.textContent = data.key;
-            document.getElementById('keysList').appendChild(li);
+            // Clear the keys list
+            const keysList = document.getElementById('keysList');
+            keysList.innerHTML = '';
+
+            // Create a new list item for each key and add it to the 'keysList' unordered list
+            data.keys.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.id}. ${item.key}`;
+                keysList.appendChild(li);
+            });
         });
 });
