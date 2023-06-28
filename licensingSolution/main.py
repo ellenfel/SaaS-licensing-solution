@@ -14,8 +14,11 @@ def keygen():
         valid_keys.append({'id': len(valid_keys) + 1, 'key': key, 'expireTime': expire_time, 'active': 'Yes'})  # Added 'active' field here
         return jsonify(keys=valid_keys)
     else:
-        return render_template('keygen.html', keys=valid_keys)
+        return render_template('keygen.html')
 
+@app.route('/keys', methods=['GET'])
+def keys():
+    return jsonify(keys=valid_keys)
 
 @app.route('/toggle_active/<int:key_id>', methods=['POST'])
 def toggle_active(key_id):
@@ -23,9 +26,6 @@ def toggle_active(key_id):
     if key:
         key['active'] = 'No' if key['active'] == 'Yes' else 'Yes'
     return jsonify(keys=valid_keys)
-
-
-
 
 @app.route('/check_key')
 def check_key():
@@ -42,7 +42,6 @@ def home():
 @app.route('/<path:path>')
 def serve_file(path):
     return send_from_directory(app.static_folder, path)
-
 
 if __name__ == '__main__':
     app.run(port=8090)  # Change this to match the port you want
