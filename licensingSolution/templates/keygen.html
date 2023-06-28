@@ -9,7 +9,7 @@
       <ul class="menu">
         <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
         <li><a href="#!" class="nav-link">About</a></li>
-        <li><a href="{{ url_for('keygen') }}" class="nav-link">Contact</a></li>
+        <li><a href="{{ url_for('keygen') }}" class="nav-link">Keys</a></li>
         <li><a href="#!" class="nav-link">Faq</a></li>
       </ul>
     </nav>
@@ -23,21 +23,25 @@
         <h2>List of Generated Keys:</h2>
         <table id="keysTable">
           <thead>
-            <tr>
-              <th>Id</th>
-              <th>Key</th>
-              <th>Expiration Time (days)</th>
-            </tr>
+              <tr>
+                  <th>Id</th>
+                  <th>Key</th>
+                  <th>Expiration Time (days)</th>
+                  <th>Active</th>
+              </tr>
           </thead>          
           <tbody>
-            {% for key in keys %}
-            <tr>
-              <td>{{ key.id }}</td>
-              <td>{{ key.key }}</td>
-            </tr>
-            {% endfor %}
+              {% for key in keys %}
+              <tr>
+                  <td>{{ key.id }}</td>
+                  <td>{{ key.key }}</td>
+                  <td>{{ key.expireTime }}</td>
+                  <td class="{{ 'active' if key.active == 'Yes' else 'inactive' }}">{{ key.active }}</td>
+              </tr>
+              {% endfor %}
           </tbody>
-        </table>
+      </table>
+      
 
         <ul id="keysList">
           {% for key in keys %}
@@ -50,13 +54,11 @@
     <div id="myModal" class="modal">
       <div class="modal-content">
           <span class="close">&times;</span>
-          <input type="number" id="expireTime" placeholder="Expiration Time (days):" min="1" max="365">
+          <label for="expireTime">Expiration Time (days): </label> <!-- Add this line -->
+          <input type="number" id="expireTime" placeholder="Enter days" min="1" max="365">
           <button id="confirmButton">Confirm</button>
       </div>
     </div>
-
-
-
 
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

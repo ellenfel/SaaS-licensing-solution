@@ -71,6 +71,16 @@ window.onclick = function(event) {
     modal.style.display = "none";
     // Don't send the POST request if the modal is closed by clicking outside
   }
+  addActiveStateEventListeners();
+}
+
+function addActiveStateEventListeners() {
+    document.querySelectorAll('#keysTable tbody td:nth-child(4)').forEach((item) => {
+        // Remove any existing event listener
+        item.removeEventListener('click', toggleActiveState);
+        // Add the event listener
+        item.addEventListener('click', toggleActiveState);
+    });
 }
 
 // Get the Confirm button that confirms the input and closes the modal
@@ -95,19 +105,109 @@ confirmBtn.onclick = function() {
 
         // Create a new table row for each key and add it to the 'keysTable' table
         data.keys.forEach(item => {
-        const tr = document.createElement('tr');
-        const tdId = document.createElement('td');
-        tdId.textContent = item.id;
-        const tdKey = document.createElement('td');
-        tdKey.textContent = item.key;
-        const tdExpireTime = document.createElement('td');
-        tdExpireTime.textContent = item.expireTime;
-        tr.appendChild(tdId);
-        tr.appendChild(tdKey);
-        tr.appendChild(tdExpireTime);
-        keysTableBody.appendChild(tr);
+            const tr = document.createElement('tr');
+            const tdId = document.createElement('td');
+            tdId.textContent = item.id;
+            const tdKey = document.createElement('td');
+            tdKey.textContent = item.key;
+            const tdExpireTime = document.createElement('td');
+            tdExpireTime.textContent = item.expireTime;
+            const tdActive = document.createElement('td');
+            tdActive.textContent = item.active;
+
+            if (item.active === 'Yes') {
+                tdActive.className = 'active';
+            } else {
+                tdActive.className = 'inactive';
+            }
+            tr.appendChild(tdActive);
+            
+
+            tdActive.className = item.active === 'Yes' ? 'active' : 'inactive';  // Add 'active' or 'inactive' class
+            tr.appendChild(tdId);
+            tr.appendChild(tdKey);
+            tr.appendChild(tdExpireTime);
+            tr.appendChild(tdActive);
+            keysTableBody.appendChild(tr);
         });
 
+        // Add event listeners to the 'Active' cells
+        document.querySelectorAll('#keysTable tbody td:nth-child(4)').forEach((item) => {
+            item.addEventListener('click', toggleActiveState);
+        });
+    });
+    addActiveStateEventListeners();
+}
+
+
+
+// When the user clicks on a table cell in the 'Active' column
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('#keysTable tbody td:nth-child(4)').forEach((item) => {
+        item.addEventListener('click', (event) => {
+            // Get the id of the key from the first cell in the row
+            const keyId = event.target.parentElement.firstElementChild.textContent;
+            // Send a POST request to toggle the active state of the key
+            fetch('/toggle_active/' + keyId, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Clear the keys table
+                const keysTableBody = document.querySelector('#keysTable tbody');
+                keysTableBody.innerHTML = '';
+
+                // Create a new table row for each key and add it to the 'keysTable' table
+                data.keys.forEach(item => {
+                    const tr = document.createElement('tr');
+                    const tdId = document.createElement('td');
+                    tdId.textContent = item.id;
+                    const tdKey = document.createElement('td');
+                    tdKey.textContent = item.key;
+                    const tdExpireTime = document.createElement('td');
+                    tdExpireTime.textContent = item.expireTime;
+                    const tdActive = document.createElement('td');
+                    tdActive.textContent = item.active;
+                    tr.appendChild(tdId);
+                    tr.appendChild(tdKey);
+                    tr.appendChild(tdExpireTime);
+                    tr.appendChild(tdActive);
+                    keysTableBody.appendChild(tr);
+                });
+            });
+        });
+    });
+});
+
+const activeState = data.active ? 'Yes' : 'No';
+
+
+function toggleActiveState(event) {
+    const keyId = event.target.parentElement.firstElementChild.textContent;
+    fetch('/toggle_active/' + keyId, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        const activeState = data.active ? 'Yes' : 'No';
+        event.target.textContent = activeState;
+
+        // Update the class of the 'Active' cell to control the color
+        if (activeState === 'Yes') {
+            event.target.className = 'active';
+        } else {
+            event.target.className = 'inactive';
+        }
+
+        // Add event listeners to the 'Active' cells
+        addActiveStateEventListeners();
     });
 }
+
+
+
+
+
+// Add event listeners after initial page load
+document.addEventListener('DOMContentLoaded', addActiveStateEventListeners);
 
