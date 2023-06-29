@@ -1,6 +1,6 @@
 # Licensing Solution Test Case
 
-This is a simple Flask web application to generate and manage license keys for software, and a demo application to simulate a licensed software's behavior. The app uses SQLite for data storage.
+This is a simple Flask web application to generate and manage license keys for software, and a demo application to simulate a licensed software's behavior. The app uses in-memory data structure (a list of dictionaries) for data storage.
 
 ![Ekran Görüntüsü](https://github.com/SoftIceCream/Licensing_Solution/assets/42888846/5abc0215-5310-4983-8bc8-2002780ef09d)
 
