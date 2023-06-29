@@ -1,20 +1,32 @@
 from flask import Flask, send_from_directory, request, jsonify, render_template
 import os
 import secrets
+from datetime import datetime
+
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 valid_keys = []  # List of dictionaries for storing keys with their order
+
 
 @app.route('/keygen', methods=['GET', 'POST'])
 def keygen():
     if request.method == 'POST':
         expire_time = request.json.get('expireTime', 30)
         key = secrets.token_hex(16)
-        valid_keys.append({'id': len(valid_keys) + 1, 'key': key, 'expireTime': expire_time, 'active': 'Yes'})  # Added 'active' field here
+        creation_date = datetime.now().strftime('%Y.%m.%d')
+        valid_keys.append({
+            'id': len(valid_keys) + 1, 
+            'key': key, 
+            'created': creation_date, 
+            'expireTime': expire_time, 
+            'active': 'Yes'
+        })
+  
         return jsonify(keys=valid_keys)
     else:
         return render_template('keygen.html')
+
 
 @app.route('/keys', methods=['GET'])
 def keys():
@@ -30,10 +42,13 @@ def toggle_active(key_id):
 @app.route('/check_key')
 def check_key():
     user_key = request.args.get('license_key')
-    if any(d['key'] == user_key for d in valid_keys):
-        return jsonify(valid=True)  # Key is valid
+    key = next((item for item in valid_keys if item["key"] == user_key), None)
+    if key and key['active'] == 'Yes':
+        return jsonify(valid=True, active=key['active'])  # Return validity and active state of the key
     else:
-        return jsonify(valid=False), 401  # Key is invalid, return HTTP 401 Unauthorized
+        return jsonify(valid=False), 401  # Key is invalid or inactive, return HTTP 401 Unauthorized
+
+
 
 @app.route('/')
 def home():

@@ -47,9 +47,10 @@ confirmButton.onclick = () => {
             const keysTableBody = document.querySelector('#keysTable tbody');
             keysTableBody.innerHTML = '';
 
+            //0
             data.keys.forEach(item => {
                 const tr = document.createElement('tr');
-                ['id', 'key', 'expireTime', 'active'].forEach(field => {
+                ['id', 'key', 'created', 'expireTime', 'active'].forEach(field => {
                     const td = document.createElement('td');
                     td.textContent = item[field];
                     if (field === 'active') {
@@ -57,9 +58,10 @@ confirmButton.onclick = () => {
                     }
                     tr.appendChild(td);
                 });
-
+            
                 keysTableBody.appendChild(tr);
             });
+            
 
             addActiveStateEventListeners();
         });
@@ -93,12 +95,16 @@ function loadKeys() {
             const tdActive = document.createElement('td');
             tdActive.textContent = item.active;
             tdActive.className = item.active === 'Yes' ? 'active' : 'inactive';
+            const tdCreated = document.createElement('td');
+            tdCreated.textContent = item.created;
             tr.appendChild(tdId);
             tr.appendChild(tdKey);
             tr.appendChild(tdExpireTime);
             tr.appendChild(tdActive);
+            tr.appendChild(tdCreated);
             keysTableBody.appendChild(tr);
         });
+        
 
         // Add event listeners to the 'Active' cells
         addActiveStateEventListeners();
