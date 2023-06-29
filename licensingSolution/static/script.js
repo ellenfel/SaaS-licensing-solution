@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', addActiveStateEventListeners);
 
 //0
 // This function fetches the keys from the server and displays them in the table
+// This function fetches the keys from the server and displays them in the table
 function loadKeys() {
     // Fetch the keys from the server
     fetch('/keys', {
@@ -87,25 +88,16 @@ function loadKeys() {
         // Create a new table row for each key and add it to the 'keysTable' table
         data.keys.forEach(item => {
             const tr = document.createElement('tr');
-            const tdId = document.createElement('td');
-            tdId.textContent = item.id;
-            const tdKey = document.createElement('td');
-            tdKey.textContent = item.key;
-            const tdExpireTime = document.createElement('td');
-            tdExpireTime.textContent = item.expireTime;
-            const tdActive = document.createElement('td');
-            tdActive.textContent = item.active;
-            tdActive.className = item.active === 'Yes' ? 'active' : 'inactive';
-            const tdCreated = document.createElement('td');
-            tdCreated.textContent = item.created;
-            tr.appendChild(tdId);
-            tr.appendChild(tdKey);
-            tr.appendChild(tdExpireTime);
-            tr.appendChild(tdActive);
-            tr.appendChild(tdCreated);
+            ['id', 'key', 'created', 'expireTime', 'active'].forEach(field => {
+                const td = document.createElement('td');
+                td.textContent = item[field];
+                if (field === 'active') {
+                    td.className = item[field] === 'Yes' ? 'active' : 'inactive';
+                }
+                tr.appendChild(td);
+            });
             keysTableBody.appendChild(tr);
         });
-        
 
         // Add event listeners to the 'Active' cells
         addActiveStateEventListeners();
@@ -114,4 +106,3 @@ function loadKeys() {
 
 // Run the loadKeys function when the page is loaded
 document.addEventListener('DOMContentLoaded', loadKeys);
-
