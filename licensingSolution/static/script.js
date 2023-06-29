@@ -7,11 +7,12 @@ const expireTimeInput = document.getElementById('expireTime');
 
 // Function to add event listeners to 'Active' cells
 function addActiveStateEventListeners() {
-    document.querySelectorAll('#keysTable tbody td:nth-child(4)').forEach((item) => {
+    document.querySelectorAll('#keysTable tbody td:nth-child(5)').forEach((item) => {
         item.removeEventListener('click', toggleActiveState);
         item.addEventListener('click', toggleActiveState);
     });
 }
+
 
 // Function to toggle the active state of a key
 function toggleActiveState(event) {
