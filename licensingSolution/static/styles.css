@@ -138,3 +138,53 @@ tr:nth-child(even) {
 .inactive {
   color: red;
 }
+
+
+
+
+/* The Modal (background) */
+.modal {
+  /* ...existing styles... */
+  display: none;  /* Add this line */
+  justify-content: center;  /* Add this line */
+  align-items: center;  /* Add this line */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  /* ...existing styles... */
+  border-radius: 10px;  /* Add this line */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);  /* Add this line */
+  max-width: 500px;  /* Add this line */
+}
+
+/* The Close Button */
+.close {
+  /* ...existing styles... */
+  margin-bottom: 20px; /* Add this line */
+}
+
+/* New styles for the input area */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-area input, .input-area button {
+  margin: 10px 0;  /* Adds some space around the input and button */
+  width: 100%;  /* Makes the input and button take up the full width of the modal */
+}
+
+#confirmButton {
+  padding: 10px;
+  background-color: #007BFF; /* Same as the generate key button */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#confirmButton:hover {
+  background-color: #0056b3; /* Same hover effect as the generate key button */
+}
+
