@@ -48,7 +48,7 @@ confirmButton.onclick = () => {
             const keysTableBody = document.querySelector('#keysTable tbody');
             keysTableBody.innerHTML = '';
 
-            //0
+            
             data.keys.forEach(item => {
                 const tr = document.createElement('tr');
                 ['id', 'key', 'created', 'expireTime', 'active'].forEach(field => {
@@ -71,7 +71,6 @@ confirmButton.onclick = () => {
 document.addEventListener('DOMContentLoaded', addActiveStateEventListeners);
 
 
-//0
 // This function fetches the keys from the server and displays them in the table
 // This function fetches the keys from the server and displays them in the table
 function loadKeys() {
